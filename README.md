@@ -6,7 +6,7 @@
 [![Platform](https://img.shields.io/badge/Platform-iOS%20%7C%20Android-lightgrey.svg)]()
 
 <div align="center">
-  <img src="assets/images/app_banner.png" alt="Elevate Hub Banner" width="800"/>
+  <img src="/ElevateHub.png" alt="Elevate Hub Banner" width="800"/>
   <p><em>One app. Every gathering that matters.</em></p>
 </div>
 
