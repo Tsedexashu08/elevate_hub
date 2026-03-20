@@ -15,8 +15,6 @@
 **Elevate Hub** is a mobile-first platform revolutionizing how Africans discover, join, and manage events across the continent. From national sports tournaments and tech hackathons to professional networking mixers, major concerts, cultural festivals, and high-level diplomatic gatherings (UN, AU, NGOs, government summits) — we bring every gathering that matters into one seamless experience.
 
 <div align="center">
-  <img src="assets/screenshots/app_showcase.png" alt="App Showcase" width="600"/>
-  <br/>
   <em>Discover, Connect, and Experience Events Across Africa</em>
 </div>
 
@@ -35,10 +33,6 @@
 - 💳 **Ticket Management** - Sell tickets, manage registrations, and track attendance in real-time
 - 📈 **Analytics & Insights** - Collect feedback and access detailed event performance metrics
 - 👥 **Attendee Management** - Engage with participants before, during, and after events
-
-<div align="center">
-  <img src="assets/screenshots/features_grid.png" alt="Features Grid" width="700"/>
-</div>
 
 ## 🏗️ Architecture
 
