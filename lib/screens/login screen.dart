@@ -135,7 +135,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 width: double.infinity,
                                 height: 56,
                                 child: ElevatedButton(
-                                  onPressed: () {},
+                                  onPressed: () {Navigator.pushNamed(context, '/events');},
                                   style: ElevatedButton.styleFrom(
                                     backgroundColor: const Color(0xFF9E8576),
                                     shape: RoundedRectangleBorder(
@@ -159,6 +159,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                         Icons.login_rounded,
                                         color: Colors.white,
                                         size: 18,
+                                        
                                       ),
                                     ],
                                   ),

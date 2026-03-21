@@ -2,6 +2,7 @@ import 'package:elevate_hub/screens/login%20screen.dart';
 import 'package:flutter/material.dart';
 import 'screens/splash screen.dart';
 import 'screens/onboarding screen.dart';
+import 'screens/events_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -18,6 +19,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/onboarding': (context) => const OnboardingScreen(),
         '/login': (context) => const LoginScreen(),
+        '/events': (context) => const EventsPage(),
       },
     );
   }
