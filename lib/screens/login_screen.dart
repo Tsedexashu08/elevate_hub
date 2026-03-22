@@ -13,12 +13,10 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // The outer beige background seen in your screenshot
       backgroundColor: const Color(0xFFF1EDE8),
       body: SafeArea(
         child: Column(
           children: [
-            // 1. The Main White Floating Card
             Expanded(
               child: Container(
                 margin: const EdgeInsets.fromLTRB(20, 20, 20, 10),
@@ -27,7 +25,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   borderRadius: BorderRadius.circular(40),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.05),
+                      color: Colors.black.withValues(alpha: 0.05),
                       blurRadius: 20,
                       offset: const Offset(0, 10),
                     ),
@@ -39,7 +37,6 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        // --- TOP SECTION: Image with soft fade ---
                         Stack(
                           children: [
                             SizedBox(
@@ -66,7 +63,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           ],
                         ),
 
-                        // --- MIDDLE SECTION: Form fields ---
+          
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 24.0),
                           child: Column(
@@ -130,12 +127,12 @@ class _LoginScreenState extends State<LoginScreen> {
 
                               const SizedBox(height: 30),
 
-                              // Sign In Button
+                           
                               SizedBox(
                                 width: double.infinity,
                                 height: 56,
                                 child: ElevatedButton(
-                                  onPressed: () {Navigator.pushNamed(context, '/events');},
+                                  onPressed: () {Navigator.pushNamed(context, '/community');},
                                   style: ElevatedButton.styleFrom(
                                     backgroundColor: const Color(0xFF9E8576),
                                     shape: RoundedRectangleBorder(
@@ -180,15 +177,14 @@ class _LoginScreenState extends State<LoginScreen> {
                               ),
                               const SizedBox(height: 25),
 
-                              // Social Buttons
-                              // Social Buttons Row
+                             
                               Row(
                                 children: [
                                   Expanded(
                                     child: _buildSocialBtn(
                                       label: 'Google',
                                       assetPath:
-                                          'assets/images/google.png', // Ensure this exists in your assets!
+                                          'assets/images/google.png', 
                                     ),
                                   ),
                                   const SizedBox(width: 15),
@@ -211,7 +207,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             ),
 
-            // 2. BOTTOM SECTION: Outside the card
+           
             Padding(
               padding: const EdgeInsets.only(bottom: 20, top: 10),
               child: Row(
@@ -222,7 +218,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     style: TextStyle(color: Colors.grey),
                   ),
                   GestureDetector(
-                    onTap: () {},
+                    onTap: () {Navigator.pushNamed(context, '/signup');},
                     child: const Text(
                       "Create Account",
                       style: TextStyle(

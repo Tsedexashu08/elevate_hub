@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'onboarding screen.dart';
+import 'onboarding_screen.dart';
 
 class ElevateHubSplash extends StatefulWidget {
   const ElevateHubSplash({super.key});
@@ -65,12 +65,12 @@ class _ElevateHubSplashState extends State<ElevateHubSplash> with SingleTickerPr
             Positioned(
               top: -50,
               right: -50,
-              child: _buildCircle(250, Colors.white.withOpacity(0.3)),
+              child: _buildCircle(250, Colors.white.withValues(alpha: 0.3)),
             ),
             Positioned(
               bottom: 50,
               left: -80,
-              child: _buildCircle(350, Colors.white.withOpacity(0.2)),
+              child: _buildCircle(350, Colors.white.withValues(alpha: 0.2)),
             ),
 
             // --- Main Logo & Text ---

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../widgets/EventCard.dart';
-import '../widgets/NavBar.dart';
+import '../widgets/event_card.dart';
+import '../widgets/nav_bar.dart';
 
 class EventsPage extends StatefulWidget {
   const EventsPage({super.key});
