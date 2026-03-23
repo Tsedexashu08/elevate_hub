@@ -57,7 +57,6 @@ class _CommunitiesPageState extends State<CommunitiesPage> {
     );
   }
 
-  // Header with Evently logo and notification
   Widget _buildHeader() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
