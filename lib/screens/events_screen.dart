@@ -1,19 +1,22 @@
 import 'package:flutter/material.dart';
 import '../widgets/event_card.dart';
-import '../widgets/nav_bar.dart';
+import 'event_detail_screen.dart';
 
-class EventsPage extends StatefulWidget {
-  const EventsPage({super.key});
+/// Body-only Events page — no nav bar (provided by MainShell).
+class EventsBody extends StatefulWidget {
+  const EventsBody({super.key});
 
   @override
-  State<EventsPage> createState() => _EventsPageState();
+  State<EventsBody> createState() => _EventsBodyState();
 }
 
-class _EventsPageState extends State<EventsPage> {
-  int _selectedIndex = 0;
+class _EventsBodyState extends State<EventsBody> {
+  static const Color _brown = Color(0xFF9E8576);
+  static const Color _beige = Color(0xFFF1EDE8);
+  static const Color _lightBeige = Color(0xFFEBE5DE);
+  static const Color _dark = Color(0xFF1A2130);
 
-  // Test Data representing the events in your UI
-  final List<Map<String, dynamic>> testEvents = [
+  final List<Map<String, dynamic>> events = [
     {
       'title': 'Tech Innovators Summit 2024',
       'day': '24',
@@ -46,70 +49,64 @@ class _EventsPageState extends State<EventsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF1EDE8), // Theme beige
-      body: Stack(
-        children: [
-          SafeArea(
-            child: SingleChildScrollView(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SizedBox(height: 10),
-                  _buildHeader(),
-                  const SizedBox(height: 20),
-                  _buildSearchBar(),
-                  const SizedBox(height: 15),
-                  _buildFilterChips(),
-                  const SizedBox(height: 25),
-                  _buildTailorCard(),
-                  const SizedBox(height: 25),
-                  const Text(
-                    'Upcoming Events',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: Color(0xFF1A2130),
-                    ),
-                  ),
-                  const SizedBox(height: 15),
-                  
-                  // Generating Event Cards from Test Data
-                  ...testEvents.map((event) => Padding(
+      backgroundColor: _beige,
+      body: SafeArea(
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(height: 12),
+              _buildHeader(),
+              const SizedBox(height: 20),
+              _buildSearchBar(),
+              const SizedBox(height: 14),
+              _buildFilterChips(),
+              const SizedBox(height: 24),
+              _buildTailorCard(),
+              const SizedBox(height: 26),
+              const Text(
+                'Upcoming Events',
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: _dark,
+                ),
+              ),
+              const SizedBox(height: 16),
+              ...events.map((event) => Padding(
                     padding: const EdgeInsets.only(bottom: 20),
-                    child: EventCard(
-                      title: event['title'],
-                      dateDay: event['day'],
-                      dateMonth: event['month'],
-                      imagePath: event['image'],
-                      price: event['price'],
-                      timeRange: event['time'],
-                      location: event['location'],
-                      onRSVP: () {},
+                    child: GestureDetector(
+                      onTap: () => _openDetail(context, event),
+                      child: EventCard(
+                        title: event['title'],
+                        dateDay: event['day'],
+                        dateMonth: event['month'],
+                        imagePath: event['image'],
+                        price: event['price'],
+                        timeRange: event['time'],
+                        location: event['location'],
+                        onRSVP: () => _openDetail(context, event),
+                      ),
                     ),
                   )),
-                  const SizedBox(height: 100), // Space for floating nav bar
-                ],
-              ),
-            ),
+              // Extra bottom padding for the floating nav bar
+              const SizedBox(height: 110),
+            ],
           ),
-
-          // Floating Navigation Bar
-          Positioned(
-            left: 0,
-            right: 0,
-            bottom: 0,
-            child: CustomBottomNavBar(
-              currentIndex: _selectedIndex,
-              onTap: (index) => setState(() => _selectedIndex = index),
-            ),
-          ),
-        ],
+        ),
       ),
     );
   }
 
-  // UI Helper: Top Header with Logo and Profile
+  void _openDetail(BuildContext context, Map<String, dynamic> event) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (_) => EventDetailScreen(event: event)),
+    );
+  }
+
+  // ─── HEADER ────────────────────────────────────────────────────────────────
   Widget _buildHeader() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -117,53 +114,81 @@ class _EventsPageState extends State<EventsPage> {
         Row(
           children: [
             Container(
-              padding: const EdgeInsets.all(8),
+              padding: const EdgeInsets.all(9),
               decoration: const BoxDecoration(
-                color: Color(0xFF9E8576),
-                shape: BoxShape.circle,
-              ),
-              child: const Icon(Icons.calendar_month, color: Colors.white, size: 20),
+                  color: _brown, shape: BoxShape.circle),
+              child: const Icon(Icons.calendar_month,
+                  color: Colors.white, size: 20),
             ),
             const SizedBox(width: 10),
-            const Text(
-              'Evently',
-              style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-            ),
+            const Text('Evently',
+                style: TextStyle(
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold,
+                    color: _dark)),
           ],
         ),
-        const CircleAvatar(
-          backgroundColor: Color(0xFFE5E5E5),
-          child: Icon(Icons.person_outline, color: Colors.grey),
-        )
+        Container(
+          decoration: BoxDecoration(
+            color: Colors.white,
+            shape: BoxShape.circle,
+            boxShadow: [
+              BoxShadow(
+                  color: Colors.black.withValues(alpha: 0.06),
+                  blurRadius: 8),
+            ],
+          ),
+          child: const CircleAvatar(
+            radius: 20,
+            backgroundColor: Colors.white,
+            child: Icon(Icons.person_outline, color: Colors.grey),
+          ),
+        ),
       ],
     );
   }
 
-  // UI Helper: Search bar
+  // ─── SEARCH BAR ────────────────────────────────────────────────────────────
   Widget _buildSearchBar() {
     return Container(
+      height: 52,
+      padding: const EdgeInsets.symmetric(horizontal: 16),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(30),
+        boxShadow: [
+          BoxShadow(
+              color: Colors.black.withValues(alpha: 0.04),
+              blurRadius: 8,
+              offset: const Offset(0, 2)),
+        ],
       ),
-      child: const TextField(
-        decoration: InputDecoration(
-          hintText: 'Search events, workshops...',
-          prefixIcon: Icon(Icons.search, color: Colors.grey),
-          border: InputBorder.none,
-          contentPadding: EdgeInsets.symmetric(vertical: 15),
-        ),
+      child: const Row(
+        children: [
+          Icon(Icons.search, color: Colors.grey, size: 20),
+          SizedBox(width: 10),
+          Expanded(
+            child: TextField(
+              decoration: InputDecoration(
+                hintText: 'Search events, workshops, concerts...',
+                hintStyle: TextStyle(color: Colors.grey, fontSize: 13),
+                border: InputBorder.none,
+                isDense: true,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
 
-  // UI Helper: Filter row
+  // ─── FILTER CHIPS ──────────────────────────────────────────────────────────
   Widget _buildFilterChips() {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: Row(
         children: [
-          _filterChip('Filters', isPrimary: true, icon: Icons.tune),
+          _filterChip('  Filters', isPrimary: true, icon: Icons.tune),
           _filterChip('Location', icon: Icons.keyboard_arrow_down),
           _filterChip('Date', icon: Icons.keyboard_arrow_down),
         ],
@@ -171,59 +196,90 @@ class _EventsPageState extends State<EventsPage> {
     );
   }
 
-  Widget _filterChip(String label, {bool isPrimary = false, IconData? icon}) {
+  Widget _filterChip(String label,
+      {bool isPrimary = false, IconData? icon}) {
     return Container(
       margin: const EdgeInsets.only(right: 10),
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 9),
       decoration: BoxDecoration(
-        color: isPrimary ? const Color(0xFF9E8576) : Colors.white,
-        borderRadius: BorderRadius.circular(20),
+        color: isPrimary ? _brown : Colors.white,
+        borderRadius: BorderRadius.circular(22),
+        boxShadow: isPrimary
+            ? []
+            : [
+                BoxShadow(
+                    color: Colors.black.withValues(alpha: 0.04),
+                    blurRadius: 6),
+              ],
       ),
       child: Row(
+        mainAxisSize: MainAxisSize.min,
         children: [
-          if (icon != null) Icon(icon, size: 16, color: isPrimary ? Colors.white : Colors.black),
+          if (icon != null)
+            Icon(icon,
+                size: 15,
+                color: isPrimary ? Colors.white : Colors.black54),
           if (icon != null) const SizedBox(width: 5),
           Text(
             label,
-            style: TextStyle(color: isPrimary ? Colors.white : Colors.black, fontWeight: FontWeight.w500),
+            style: TextStyle(
+              color: isPrimary ? Colors.white : _dark,
+              fontWeight: FontWeight.w600,
+              fontSize: 13,
+            ),
           ),
         ],
       ),
     );
   }
 
-  // UI Helper: Tailor your experience card
+  // ─── TAILOR CARD ───────────────────────────────────────────────────────────
   Widget _buildTailorCard() {
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.all(20),
+      padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 20),
       decoration: BoxDecoration(
-        color: const Color(0xFFEBE5DE),
-        borderRadius: BorderRadius.circular(30),
+        color: _lightBeige,
+        borderRadius: BorderRadius.circular(28),
       ),
       child: Column(
         children: [
-          const Text('Tailor your experience', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
-          const SizedBox(height: 5),
-          const Text(
-            'Discover events based on your unique interests.',
+          const Text('Tailor your experience',
+              style: TextStyle(
+                  fontWeight: FontWeight.bold, fontSize: 16, color: _dark)),
+          const SizedBox(height: 6),
+          Text(
+            'Discover events based on your unique interests and availability.',
             textAlign: TextAlign.center,
-            style: TextStyle(color: Colors.grey, fontSize: 12),
+            style: TextStyle(color: Colors.grey.shade500, fontSize: 12),
           ),
-          const SizedBox(height: 15),
+          const SizedBox(height: 16),
           ElevatedButton.icon(
             onPressed: () {},
             icon: const Icon(Icons.tune, size: 16),
-            label: const Text('Advanced Filters'),
+            label: const Text('Advanced Filters',
+                style: TextStyle(fontWeight: FontWeight.w600)),
             style: ElevatedButton.styleFrom(
-              backgroundColor: const Color(0xFF9E8576),
+              backgroundColor: _brown,
               foregroundColor: Colors.white,
               elevation: 0,
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 22, vertical: 12),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(22)),
             ),
-          )
+          ),
         ],
       ),
     );
   }
+}
+
+// ─── BACKWARD-COMPAT WRAPPER ──────────────────────────────────────────────────
+/// Navigating directly to /events still works via this wrapper.
+class EventsPage extends StatelessWidget {
+  const EventsPage({super.key});
+
+  @override
+  Widget build(BuildContext context) => const EventsBody();
 }
